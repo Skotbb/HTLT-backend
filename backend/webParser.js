@@ -1,7 +1,7 @@
-let request = require('request');
+let request = require('request-promise-native');
 
-module.export = class WebParser {
-    async getAcrageFromWeb(addressObject) {
+module.exports = class WebParser {
+    static async getAcrageFromWeb(addressObject) {
         // {
         //     streetAddress: "1806 Morven Ct.",
         //     city: "Deltona",
@@ -12,6 +12,11 @@ module.export = class WebParser {
         let url = `https://www.melissa.com/lookups/property.asp?` +
         `Address=${replaceSpaces(addressObject.streetAddress)}&city=${addressObject.city}` +
         `&state=${addressObject.state}&zip=${addressObject.zip}`;
+
+        let options = {};
+
+        let result = await request(url, options);
+        return result;
     }
 }
 
